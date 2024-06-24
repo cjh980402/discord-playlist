@@ -1,0 +1,34 @@
+{
+  "name": "discord-playlist",
+  "version": "1.0.0",
+  "description": "Make youtube playlist from discord",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "prepublish": "npm run pretty",
+    "restart": "forever restart index.js",
+    "start": "forever start --killSignal=SIGTERM -o ./log/out.log -e ./log/err.log index.js",
+    "stop": "forever stop index.js",
+    "pretty": "prettier --config .prettierrc --write '**/*.js'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cjh980402/discord-playlist.git"
+  },
+  "author": "cjh980402",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cjh980402/discord-playlist/issues"
+  },
+  "homepage": "https://github.com/cjh980402/discord-playlist#readme",
+  "dependencies": {
+    "better-sqlite3": "^11.0.0",
+    "discord.js": "^14.15.3",
+    "googleapis": "^140.0.0",
+    "open": "^10.1.0",
+    "server-destroy": "^1.0.1"
+  },
+  "devDependencies": {
+    "prettier": "^3.3.2"
+  }
+}

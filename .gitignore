@@ -1,0 +1,9 @@
+# folder
+.git/
+db/
+log/
+node_modules/
+
+# file
+*.tflite
+config.js
