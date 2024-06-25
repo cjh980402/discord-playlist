@@ -52,11 +52,14 @@ const youtube = google.youtube('v3');
 
 async function AddPlaylist(title, desc) {
     const res = await youtube.playlists.insert({
-        part: 'id,snippet,status',
+        part: 'id, snippet, status',
         requestBody: {
             snippet: {
                 title: title,
                 description: desc
+            },
+            status: {
+                privacyStatus: 'unlisted'
             }
         }
     });
