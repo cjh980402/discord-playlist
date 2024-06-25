@@ -50,17 +50,39 @@ async function authenticate(scopes) {
 
 const youtube = google.youtube('v3');
 
-async function runSample() {
+async function AddPlaylist(title, desc) {
     const res = await youtube.playlists.insert({
         part: 'id,snippet,status',
         requestBody: {
             snippet: {
-                title: 'New Playlist',
-                description: 'Add by API'
+                title: title,
+                description: desc
             }
         }
     });
     console.log(res.data);
+    return res.data.id;
+}
+
+async function AddPlaylistVideo(listId, videoId) {
+    const res = await youtube.playlistItems.insert({
+        part: 'snippet, contentDetails, status',
+        requestBody: {
+            snippet: {
+                playlistId: listId,
+                resourceId: {
+                    kind: 'youtube#video',
+                    videoId: videoId
+                }
+            }
+        }
+    });
+    console.log(res.data);
+}
+
+async function runSample() {
+    const listId = await AddPlaylist('New Playlist', 'Add by API');
+    await AddPlaylistVideo(listId, 'eEqCEFuQqF8');
 }
 
 const scopes = ['https://www.googleapis.com/auth/youtube'];
