@@ -26,6 +26,7 @@ async function authenticate(scopes) {
             access_type: 'offline',
             scope: scopes.join(' ')
         });
+        console.log(authorizeUrl);
         const server = http
             .createServer(async (req, res) => {
                 try {
@@ -33,7 +34,7 @@ async function authenticate(scopes) {
                     res.end('Authentication successful! Please return to the console.');
                     server.destroy();
                     const { tokens } = await oauth2Client.getToken(qs.get('code'));
-                    oauth2Client.credentials = tokens; // eslint-disable-line require-atomic-updates
+                    oauth2Client.credentials = tokens;
                     resolve(oauth2Client);
                 } catch (e) {
                     reject(e);
@@ -50,8 +51,7 @@ async function authenticate(scopes) {
 const youtube = google.youtube('v3');
 
 async function runSample() {
-    const res = youtube.playlists.insert({
-        auth: oauth2Client,
+    const res = await youtube.playlists.insert({
         part: 'id,snippet,status',
         requestBody: {
             snippet: {
@@ -64,6 +64,4 @@ async function runSample() {
 }
 
 const scopes = ['https://www.googleapis.com/auth/youtube'];
-authenticate(scopes)
-    .then((client) => runSample(client))
-    .catch(console.error);
+authenticate(scopes).then(runSample).catch(console.error);
