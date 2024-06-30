@@ -45,12 +45,10 @@ export async function listener(message) {
             const videoId = getVideoId(message.content, true);
             console.log(message.content);
             if (videoId) {
-                try {
-                    await AddPlaylistVideo(listId, videoId);
-                } catch {
+                if (oauth2Client.credentials.expiry_date < Date.now()) {
                     await oauth2Client.refreshAccessToken();
-                    await AddPlaylistVideo(listId, videoId);
                 }
+                await AddPlaylistVideo(listId, videoId);
             }
         }
     } catch (err) {
