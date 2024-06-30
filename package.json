@@ -26,7 +26,8 @@
     "discord.js": "^14.15.3",
     "googleapis": "^140.0.0",
     "open": "^10.1.0",
-    "server-destroy": "^1.0.1"
+    "server-destroy": "^1.0.1",
+    "undici": "^6.19.2"
   },
   "devDependencies": {
     "prettier": "^3.3.2"
