@@ -39,7 +39,11 @@ export async function listener(message) {
             await adminChat(message);
         }
 
-        const listData = message.client.db.get('SELECT * FROM guild_playlist WHERE guild_id = ?', message.guildId);
+        const listData = message.client.db.get(
+            'SELECT * FROM guild_playlist WHERE guild_id = ? AND channel_id = ?',
+            message.guildId,
+            message.channelId
+        );
         if (listData) {
             const listId = listData.list_id;
             const videoId = getVideoId(message.content, true);

@@ -14,9 +14,10 @@ export class SoyaClient extends Client {
             partials: [Partials.Channel],
             intents: [
                 IntentsBitField.Flags.Guilds,
-                IntentsBitField.Flags.GuildVoiceStates,
+                IntentsBitField.Flags.GuildMembers,
                 IntentsBitField.Flags.GuildMessages,
-                IntentsBitField.Flags.DirectMessages
+                IntentsBitField.Flags.DirectMessages,
+                IntentsBitField.Flags.MessageContent
             ],
             presence: { activities: [{ name: '/add 및 /show', type: ActivityType.Listening }] },
             sweepers: {
