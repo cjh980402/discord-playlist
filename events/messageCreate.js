@@ -1,7 +1,7 @@
 import { adminChat } from '../admin/admin_function.js';
 import { sendAdmin } from '../admin/bot_message.js';
 import { ADMIN_ID } from '../config.js';
-import { AddPlaylistVideo } from '../util/youtube.js';
+import { AddPlaylistVideo, oauth2Client } from '../util/youtube.js';
 
 const ytVideoRegex = /^[\w-]{11}$/;
 const ytValidPathDomains = /^https?:\/\/(youtu\.be\/|(www\.)?youtube\.com\/(embed|v|shorts|live)\/)/;
@@ -45,7 +45,12 @@ export async function listener(message) {
             const videoId = getVideoId(message.content, true);
             console.log(message.content);
             if (videoId) {
-                await AddPlaylistVideo(listId, videoId);
+                try {
+                    await AddPlaylistVideo(listId, videoId);
+                } catch {
+                    await oauth2Client.refreshAccessToken();
+                    await AddPlaylistVideo(listId, videoId);
+                }
             }
         }
     } catch (err) {

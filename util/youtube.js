@@ -6,11 +6,13 @@ import url from 'url';
 import open from 'open';
 import destroyer from 'server-destroy';
 
+const youtube = google.youtube('v3');
+
 /**
  * Create a new OAuth2 client with the configured keys.
  */
 const redirect_uri = `http://localhost:${PORT}`;
-const oauth2Client = new google.auth.OAuth2(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, redirect_uri);
+export const oauth2Client = new google.auth.OAuth2(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, redirect_uri);
 
 /**
  * This is one of the many ways you can configure googleapis to use authentication credentials.  In this method, we're setting a global reference for all APIs.  Any other API you use here, like google.drive('v3'), will now use this auth client. You can also override the auth client at the service and method call levels.
@@ -25,6 +27,7 @@ export async function authenticate(scopes, client) {
         // grab the url that will be used for authorization
         const authorizeUrl = oauth2Client.generateAuthUrl({
             access_type: 'offline',
+            prompt: 'consent',
             scope: scopes.join(' ')
         });
         console.log(authorizeUrl);
@@ -36,7 +39,8 @@ export async function authenticate(scopes, client) {
                     res.end('Authentication successful! Please return to the console.');
                     server.destroy();
                     const { tokens } = await oauth2Client.getToken(qs.get('code'));
-                    oauth2Client.credentials = tokens;
+                    console.log(tokens);
+                    oauth2Client.setCredentials(tokens);
                     resolve(oauth2Client);
                 } catch (e) {
                     reject(e);
@@ -49,8 +53,6 @@ export async function authenticate(scopes, client) {
         destroyer(server);
     });
 }
-
-const youtube = google.youtube('v3');
 
 export async function AddPlaylist(title, desc) {
     const res = await youtube.playlists.insert({

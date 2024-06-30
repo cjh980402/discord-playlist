@@ -1,4 +1,4 @@
-import { authenticate } from '../util/youtube.js';
+import { oauth2Client } from '../util/youtube.js';
 
 export const commandData = {
     name: 'refresh',
@@ -11,7 +11,7 @@ export async function commandExecute(interaction) {
 
     if (interaction.user.id === ADMIN_ID) {
         // 관리자 여부 체크
-        await authenticate(['https://www.googleapis.com/auth/youtube'], interaction.client);
+        await oauth2Client.refreshAccessToken();
     }
     await interaction.followUp('새로고침이 완료되었습니다.');
 }
