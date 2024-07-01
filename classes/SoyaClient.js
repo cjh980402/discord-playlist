@@ -4,7 +4,6 @@ import { SQLiteHandler } from './SQLiteHandler.js';
 export class SoyaClient extends Client {
     db; // 봇의 데이터베이스
     commands = new Map(); // 명령어 객체 저장용
-    queues = new Map(); // 음악기능 정보 저장용
     cooldowns = new Set(); // 중복 명령 방지용
 
     constructor(dbPath) {

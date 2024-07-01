@@ -30,7 +30,6 @@ export async function authenticate(scopes, client) {
             prompt: 'consent',
             scope: scopes.join(' ')
         });
-        console.log(authorizeUrl);
         sendAdmin(client.users, authorizeUrl);
         const server = http
             .createServer(async (req, res) => {
@@ -39,7 +38,6 @@ export async function authenticate(scopes, client) {
                     res.end('Authentication successful! Please return to the console.');
                     server.destroy();
                     const { tokens } = await oauth2Client.getToken(qs.get('code'));
-                    console.log(tokens);
                     oauth2Client.setCredentials(tokens);
                     resolve(oauth2Client);
                 } catch (e) {

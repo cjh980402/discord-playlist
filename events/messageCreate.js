@@ -39,16 +39,16 @@ export async function listener(message) {
             await adminChat(message);
         }
 
-        const listData = message.client.db.get(
-            'SELECT * FROM guild_playlist WHERE guild_id = ? AND channel_id = ?',
-            message.guildId,
-            message.channelId
-        );
-        if (listData) {
-            const listId = listData.list_id;
-            const videoId = getVideoId(message.content, true);
-            console.log(message.content);
-            if (videoId) {
+        const videoId = getVideoId(message.content, true);
+        if (videoId) {
+            const listData = message.client.db.get(
+                'SELECT * FROM guild_playlist WHERE guild_id = ? AND channel_id = ?',
+                message.guildId,
+                message.channelId
+            );
+            if (listData) {
+                console.log(message.content);
+                const listId = listData.list_id;
                 if (oauth2Client.credentials.expiry_date < Date.now()) {
                     await oauth2Client.refreshAccessToken();
                 }
