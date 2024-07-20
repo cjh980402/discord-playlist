@@ -1,6 +1,6 @@
 export const commandData = {
     name: 'show',
-    description: '해당 서버의 유튜브 재생목록 링크를 보여줍니다.'
+    description: '명령어를 사용한 서버의 유튜브 재생목록 링크를 보여줍니다.'
 };
 export async function commandExecute(interaction) {
     if (!interaction.inGuild()) {

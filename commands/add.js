@@ -2,7 +2,7 @@ import { AddPlaylist } from '../util/youtube.js';
 
 export const commandData = {
     name: 'add',
-    description: '해당 서버에 올라오는 유튜브 링크를 자동으로 재생목록에 추가하도록 합니다.'
+    description: '명령어를 사용한 채널에 올라오는 유튜브 링크를 자동으로 재생목록에 추가하도록 설정합니다.'
 };
 export async function commandExecute(interaction) {
     if (!interaction.inGuild()) {
