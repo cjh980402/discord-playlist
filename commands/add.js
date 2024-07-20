@@ -12,7 +12,7 @@ export async function commandExecute(interaction) {
     const listData = interaction.client.db.get('SELECT * FROM guild_playlist WHERE guild_id = ?', interaction.guildId);
     if (listData) {
         await interaction.followUp(
-            `https://www.youtube.com/playlist?list=${listData.list_id} 재생목록에 링크가 자동 저장되어있습니다.`
+            `<#${listData.channel_id}>에 올라오는 링크가 https://www.youtube.com/playlist?list=${listData.list_id} 재생목록에 자동 저장되어있습니다.`
         );
     } else {
         const listId = await AddPlaylist(interaction.guild.name, `${interaction.guild.name}의 재생목록`);
