@@ -8,7 +8,7 @@ export const exec = promisify(_exec);
 export async function adminChat(message) {
     const fullContent = await getFullContent(message);
     const targetId = /^\^(\d+)\^\s/.exec(fullContent)?.[1];
-    if (fullContent.startsWith('>')) {
+    if (fullContent.startsWith(']')) {
         // 노드 코드 실행 후 출력
         const funcBody = fullContent.slice(1).trim().split('\n'); // 긴 코드 테스트를 위해 fullContent 이용
         funcBody.push(`return ${funcBody.pop()};`); // 함수의 마지막 줄 내용은 자동으로 반환
